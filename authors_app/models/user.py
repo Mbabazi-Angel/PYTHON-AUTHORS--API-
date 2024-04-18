@@ -10,7 +10,7 @@ class User(db.Model):
     first_name = db.Column(db.String(50),nullable = False) 
     last_name = db.Column(db.String(100),nullable=False)
     email = db.Column(db.String(100),nullable=False,unique=True)
-    contact = db.Column(db.Integer,nullable=False,unique=True)
+    contact = db.Column(db.String(100),nullable=False,unique=True)
     user_type = db.Column(db.String(50),nullable=False,default='author')
     image = db.Column(db.String(255),nullable=True)
     biography = db.Column(db.Text(),nullable=True)

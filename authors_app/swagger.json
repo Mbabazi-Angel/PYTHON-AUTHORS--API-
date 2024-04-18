@@ -1,0 +1,312 @@
+
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Authors App API",
+      "description": "API for managing users, companies, and books in the Authors App."
+    },
+    "host": "localhost:5000",
+    "schemes": ["http"],
+    "basePath": "/",
+    "securityDefinitions": {
+      "Bearer": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      }
+    },
+    "paths": {
+      "/auth/register": {
+        "post": {
+          "summary": "Register a new user",
+          "description": "Registers a new user with the required details.",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "User registered successfully"
+            },
+            "400": {
+              "description": "Error: Bad Request"
+            }
+          }
+        }
+      },
+      "/auth/login": {
+        "post": {
+          "summary": "User login",
+          "description": "Logs in a user and returns a token.",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Login"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Login successful, token returned."
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        }
+      },
+      "/user/{id}": {
+        "put": {
+          "summary": "Edit user",
+          "description": "Edit details of an existing user.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "integer"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/UserEdit"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "User details updated successfully"
+            },
+            "400": {
+              "description": "Bad Request"
+            }
+          },
+          "security": [
+            {"Bearer": []}
+          ]
+        }
+      },
+      "/company": {
+        "post": {
+          "summary": "Create company",
+          "description": "Creates a new company record.",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Company"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Company created successfully"
+            },
+            "400": {
+              "description": "Error: Bad Request"
+            }
+          },
+          "security": [
+            {"Bearer": []}
+          ]
+        }
+      },
+      "/company/{id}": {
+        "delete": {
+          "summary": "Delete company",
+          "description": "Deletes a specified company.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "integer"
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Company deleted successfully"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          },
+          "security": [
+            {"Bearer": []}
+          ]
+        }
+      },
+      "/book": {
+        "post": {
+          "summary": "Create book",
+          "description": "Creates a new book record.",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Book"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Book created successfully"
+            },
+            "400": {
+              "description": "Error: Bad Request"
+            }
+          },
+          "security": [
+            {"Bearer": []}
+          ]
+        }
+      },
+      "/book/{id}": {
+        "delete": {
+          "summary": "Delete book",
+          "description": "Deletes a specified book.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "integer"
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Book deleted successfully"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          },
+          "security": [
+            {"Bearer": []}
+          ]
+        },
+        "put": {
+          "summary": "Edit book",
+          "description": "Edit details of an existing book.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "integer"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/BookEdit"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Book details updated successfully"
+            },
+            "400": {
+              "description": "Bad Request"
+            }
+          },
+          "security": [
+            {"Bearer": []}
+          ]
+        }
+      }
+    },
+    "definitions": {
+      "User": {
+        "type": "object",
+        "required": ["username", "password", "email"],
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string",
+            "format": "password"
+          },
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "Login": {
+        "type": "object",
+        "required": ["username", "password"],
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string",
+            "format": "password"
+          }
+        }
+      },
+      "UserEdit": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "Company": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "Book": {
+        "type": "object",
+        "required": ["title", "author", "company_id"],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          },
+          "company_id": {
+            "type": "integer"
+          }
+        }
+      },
+      "BookEdit": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+  

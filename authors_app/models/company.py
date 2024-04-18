@@ -22,7 +22,8 @@ class Company(db.Model):
 
     def __init__(self,name,origin,description,user_id):
         super(Company,self).__init__()
-        self.name = name
+        #self.id = id 
+        self.name = name 
         self.origin = origin
         self.description = description
         self.user_id = user_id
